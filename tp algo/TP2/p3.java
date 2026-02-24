@@ -7,7 +7,7 @@ public class p3 { // client
 
         try {
             System.out.println("Demande de connexion");
-            Socket c = new Socket("localhost", 2004);
+            Socket c = new Socket("192.168.161.208", 2004);
             System.out.println("Connected ...");
             ObjectOutputStream out = new ObjectOutputStream(c.getOutputStream());
             out.writeObject("IL");
