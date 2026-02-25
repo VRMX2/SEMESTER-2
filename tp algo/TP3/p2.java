@@ -46,7 +46,5 @@ public class p2 {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
 }
