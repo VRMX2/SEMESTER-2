@@ -11,39 +11,39 @@ public class p3 {
 
             ServerSocket server = new ServerSocket(5003);
 
-            System.out.println("P3 waiting...");
+            System.out.println("P3 running...");
 
-            Socket socketP2 = server.accept();
+            while (true) {
 
-            ObjectInputStream inP2 = new ObjectInputStream(socketP2.getInputStream());
+                Socket socketP2 = server.accept();
 
-            ObjectOutputStream outP2 = new ObjectOutputStream(socketP2.getOutputStream());
+                ObjectInputStream inP2 = new ObjectInputStream(socketP2.getInputStream());
 
-            int N = (Integer) inP2.readObject();
+                ObjectOutputStream outP2 = new ObjectOutputStream(socketP2.getOutputStream());
 
-            N = N * 20;
+                int N = (Integer) inP2.readObject();
 
-            System.out.println("P3 send to P4: " + N);
+                System.out.println("P3 received: " + N);
 
-            Socket socketP4 = new Socket("localhost", 5004);
+                N = N * 20;
 
-            ObjectOutputStream outP4 = new ObjectOutputStream(socketP4.getOutputStream());
+                Socket socketP4 = new Socket("localhost", 5004);
 
-            ObjectInputStream inP4 = new ObjectInputStream(socketP4.getInputStream());
+                ObjectOutputStream outP4 = new ObjectOutputStream(socketP4.getOutputStream());
 
-            outP4.writeObject(N);
+                ObjectInputStream inP4 = new ObjectInputStream(socketP4.getInputStream());
 
-            int result = (Integer) inP4.readObject();
+                outP4.writeObject(N);
 
-            outP2.writeObject(result);
+                int result = (Integer) inP4.readObject();
 
-            socketP4.close();
-            socketP2.close();
-            server.close();
+                outP2.writeObject(result);
 
-        }
+                socketP4.close();
+                socketP2.close();
+            }
 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

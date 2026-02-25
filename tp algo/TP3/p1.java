@@ -9,29 +9,32 @@ public class p1 {
 
         try {
 
-            BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+            BufferedReader keyboard = new BufferedReader(
+                    new InputStreamReader(System.in));
 
-            System.out.print("Enter N: ");
+            while (true) {
 
-            int N = Integer.parseInt(keyboard.readLine());
+                System.out.print("\nEnter N: ");
 
-            Socket socket = new Socket("localhost", 5002);
+                int N = Integer.parseInt(keyboard.readLine());
 
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                Socket socket = new Socket("localhost", 5002);
 
-            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-            out.writeObject(N);
+                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
-            int result = (Integer) in.readObject();
+                out.writeObject(N);
 
-            System.out.println("Final result = " + result);
+                int result = (Integer) in.readObject();
 
-            socket.close();
+                System.out.println("Result = " + result);
 
-        }
+                socket.close();
 
-        catch (Exception e) {
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

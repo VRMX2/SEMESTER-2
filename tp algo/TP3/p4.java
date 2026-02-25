@@ -11,28 +11,28 @@ public class p4 {
 
             ServerSocket server = new ServerSocket(5004);
 
-            System.out.println("P4 waiting...");
+            System.out.println("P4 running...");
 
-            Socket socketP3 = server.accept();
+            while (true) {
 
-            ObjectInputStream in = new ObjectInputStream(socketP3.getInputStream());
+                Socket socket = server.accept();
 
-            ObjectOutputStream out = new ObjectOutputStream(socketP3.getOutputStream());
+                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
-            int N = (Integer) in.readObject();
+                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-            N = N * 30;
+                int N = (Integer) in.readObject();
 
-            System.out.println("P4 send result: " + N);
+                System.out.println("P4 received: " + N);
 
-            out.writeObject(N);
+                N = N * 30;
 
-            socketP3.close();
-            server.close();
+                out.writeObject(N);
 
-        }
+                socket.close();
+            }
 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
