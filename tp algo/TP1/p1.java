@@ -6,13 +6,13 @@ public class p1 { //client
 	public static void main(String[] args) {
 		
 		try {
-		System.out.println("Demande de connexion");
-		Socket c  = new Socket("localhost", 2004);
-		System.out.println("Connected ...");
-		ObjectOutputStream out = new ObjectOutputStream(c.getOutputStream());
-		out.writeObject("RSD");
-		out.close();
-		c.close();
+		    System.out.println("Demande de connexion");
+		    Socket c  = new Socket("localhost", 2004);
+		    System.out.println("Connected ...");
+		    ObjectOutputStream out = new ObjectOutputStream(c.getOutputStream());
+		    out.writeObject("RSD");
+		    out.close();
+		    c.close();
 		}
 		catch(Exception e) {
 			System.out.println("Exception :"+e.toString());

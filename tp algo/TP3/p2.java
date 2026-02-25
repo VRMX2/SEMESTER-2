@@ -1,45 +1,52 @@
 package TP3;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
+import java.io.*;
 
 public class p2 {
+
     public static void main(String[] args) {
+
         try {
-          
-            ServerSocket ss = new ServerSocket(2002);
-            System.out.println("P2 en attente...");
 
-            Socket c = ss.accept();
-            System.out.println("P1 connecté");
+            ServerSocket server = new ServerSocket(5002);
 
-            ObjectInputStream in = new ObjectInputStream(c.getInputStream());
-            String N = (String) in.readObject();
+            System.out.println("P2 waiting...");
 
-       
-            String S = Integer.toString(Integer.parseInt(N) * 10);
-            System.out.println("Résultat calculé : " + S);
+            Socket socketP1 = server.accept();
 
-            in.close();
-            c.close();
-            ss.close();
+            ObjectInputStream inP1 = new ObjectInputStream(socketP1.getInputStream());
 
-        
-            Socket socketP3 = new Socket("192.168.14.156", 2003);
+            ObjectOutputStream outP1 = new ObjectOutputStream(socketP1.getOutputStream());
+
+            int N = (Integer) inP1.readObject();
+
+            N = N * 10;
+
+            System.out.println("P2 send to P3: " + N);
+
+            Socket socketP3 = new Socket("localhost", 5003);
+
             ObjectOutputStream outP3 = new ObjectOutputStream(socketP3.getOutputStream());
 
-            outP3.writeObject(S);
-            outP3.flush();
+            ObjectInputStream inP3 = new ObjectInputStream(socketP3.getInputStream());
 
-            outP3.close();
+            outP3.writeObject(N);
+
+            int result = (Integer) inP3.readObject();
+
+            outP1.writeObject(result);
+
             socketP3.close();
+            socketP1.close();
+            server.close();
 
-            System.out.println("S envoyé à P3");
-
-        } catch (Exception e) {
-            System.out.println("Exception : " + e.toString());
         }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
+
 }
